@@ -1,29 +1,28 @@
-#!/usr/bin/node  // This is called a shebang, and it specifies the interpreter to use when running the script.
-
-const request = require('request'); // Import the 'request' module for making HTTP requests.
-
-const filmNum = process.argv[2] + '/'; // Get the command line argument at index 2 (typically, a film number), and append a '/' to it.
-const filmURL = 'https://swapi-api.hbtn.io/api/films/'; // The base URL for the Star Wars API.
+#!/usr/bin/node
+//Import the 'request' module for making HTTP requests
+const request = require('request');
+//base URL for the Star Wars API
+const filmNum = process.argv[2] + '/';
+const filmURL = 'https://swapi-api.hbtn.io/api/films/';
 
 // Makes an API request to get film information
 request(filmURL + filmNum, async function (err, res, body) {
-  if (err) return console.error(err); // Handle any errors during the API request.
+  if (err) return console.error(err);
 
-  // Parse the response body to get the list of character URLs
+  // Parse  response body to get the list of character URLs
   const charURLList = JSON.parse(body).characters;
 
-  // Iterate through the character URLs and fetch character information
+  // Iterare through the character URLs and fect character information
   // Make a request to each character URL
   for (const charURL of charURLList) {
     await new Promise(function (resolve, reject) {
       request(charURL, function (err, res, body) {
-        if (err) return console.error(err); // Handle any errors during character information request.
+        if (err) return console.error(err);
 
-        // Parse the character information and print the character's name. Resolve the promise to indicate completion.
+        // Parse the charcter nformation and print the character's name Resolve the promise to indicate completion
         console.log(JSON.parse(body).name);
         resolve();
       });
     });
   }
 });
-
