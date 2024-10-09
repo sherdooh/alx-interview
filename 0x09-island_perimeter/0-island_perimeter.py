@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" This is a function to find the perimiter of Island """
+""" Function to find the perimiter of an Island """
 
 
 def island_perimeter(grid):
